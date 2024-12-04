@@ -1,12 +1,29 @@
 <template>
   <div class="toolbar">
-    <button @click="toggleApp(null)">None</button>
+    <label>
+      Number of dropdowns
+      <input type="number" v-model="numberOfDropdowns" />
+    </label>
+    <label>
+      Users per dropdown
+      <input type="number" v-model="usersPerDropdown" />
+    </label>
     <button @click="toggleApp('props')">Props</button>
     <button @click="toggleApp('pinia')">Pinia</button>
   </div>
   <div class="test-app">
-    <AppWithProps v-if="app === 'props'" />
-    <AppWithPinia v-if="app === 'pinia'" />
+    <AppWithProps
+      v-if="app === 'props'"
+      :users="users"
+      :number-of-dropdowns="numberOfDropdowns"
+      :users-per-dropdown="usersPerDropdown"
+    />
+    <AppWithPinia
+      v-if="app === 'pinia'"
+      :users="users"
+      :number-of-dropdowns="numberOfDropdowns"
+      :users-per-dropdown="usersPerDropdown"
+    />
   </div>
 </template>
 
@@ -14,8 +31,15 @@
 import { ref } from 'vue'
 import AppWithProps from './components/AppWithProps.vue'
 import AppWithPinia from './components/AppWithPinia.vue'
+import { createRandomUser } from './schema'
 
 const app = ref<'props' | 'pinia' | null>(null)
+
+const numberOfDropdowns = ref(1)
+const usersPerDropdown = ref(10)
+
+const users = Array.from({ length: 100_000 }, (_, i) => createRandomUser(i))
+
 const toggleApp = (newApp: 'props' | 'pinia' | null) => {
   app.value = newApp
 }
@@ -23,6 +47,7 @@ const toggleApp = (newApp: 'props' | 'pinia' | null) => {
 
 <style scoped>
 .toolbar {
+  color: #333;
   padding: 1rem;
   display: flex;
   gap: 1rem;

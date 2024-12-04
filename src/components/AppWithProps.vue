@@ -5,20 +5,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import DropdownWithProps from './DropdownWithProps.vue'
-import { createRandomUser, type User } from '@/schema'
 import { uniqueRandomIdsInRange } from '@/utils'
+import type { User } from '@/schema'
 
-const users = Array.from({ length: 100_000 }, (_, i) => createRandomUser(i))
+const props = defineProps<{
+  users: User[]
+  numberOfDropdowns: number
+  usersPerDropdown: number
+}>()
 
 const pickRandomUsers = (quantity: number) => {
-  const ids = uniqueRandomIdsInRange(quantity, [0, users.length])
-  return Array.from(ids).map((id) => users[id])
+  const ids = uniqueRandomIdsInRange(quantity, [0, props.users.length])
+  return Array.from(ids).map((id) => props.users[id])
 }
 
 const createRandomDropdowns = (quantity: number) =>
   Array.from({ length: quantity }, (_, i) => ({
     id: i,
-    users: pickRandomUsers(10_000),
+    users: pickRandomUsers(props.usersPerDropdown),
   }))
 
 type Dropdown = {
@@ -26,5 +30,5 @@ type Dropdown = {
   id: number
 }
 
-const dropdowns = ref<Dropdown[]>(createRandomDropdowns(10_000))
+const dropdowns = ref<Dropdown[]>(createRandomDropdowns(props.numberOfDropdowns))
 </script>

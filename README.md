@@ -1,45 +1,31 @@
-# props-vs-pinia
+# vue-props-vs-pinia
 
-This template should help get you started developing with Vue 3 in Vite.
+### Test environment
 
-## Recommended IDE Setup
+MacBook Pro M3 16Gb RAM
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### How to run tests
 
-## Type Support for `.vue` Imports in TS
+run the project with `npm run dev`
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+for each test:
 
-## Customize configuration
+1. refresh the page
+2. write the numbers in the input fields
+3. open the dev tools on the `Performance` tab
+4. click on the record button in the `Performance` tab
+5. click on the `Props` or `Pinia` button, depending on the test case
+6. wait for the dropdowns to rendere on the page
+7. stop the recoding in the `Performance` tab
+8. check the `<AppWithProps> mount` or `<AppWithPinia> mount` time in the `Timings` section
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+### Test results
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+| Number of dropdowns | Users per dropdown | Mount time with Props | Mount time with Pinia |
+| ------------------: | -----------------: | --------------------: | --------------------: |
+|                  10 |                 10 |               3,46 ms |               4,24 ms |
+|                 100 |                100 |              30,09 ms |              28,58 ms |
+|               1_000 |              1_000 |             460,12 ms |             288,48 ms |
+|               5_000 |              5_000 |                6,72 s |                2,23 s |
+|              10_000 |             10_000 |               23,97 s |                6,66 s |
+|              10_000 |             50_000 |              2,01 min |               31,04 s |

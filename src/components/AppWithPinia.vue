@@ -5,24 +5,28 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import DropdownWithPinia from './DropdownWithPinia.vue'
-import { createRandomUser, type User } from '@/schema'
 import { uniqueRandomIdsInRange } from '@/utils'
 import { useUsersStore } from '@/stores/users'
+import type { User } from '@/schema'
 
-const users = Array.from({ length: 100_000 }, (_, i) => createRandomUser(i))
+const props = defineProps<{
+  users: User[]
+  numberOfDropdowns: number
+  usersPerDropdown: number
+}>()
 
 const usersStore = useUsersStore()
-usersStore.loadUsers(users)
+usersStore.loadUsers(props.users)
 
 const pickRandomUserIds = (quantity: number) => {
-  const ids = uniqueRandomIdsInRange(quantity, [0, users.length])
+  const ids = uniqueRandomIdsInRange(quantity, [0, props.users.length])
   return Array.from(ids)
 }
 
 const createRandomDropdowns = (quantity: number) =>
   Array.from({ length: quantity }, (_, i) => ({
     id: i,
-    userIds: pickRandomUserIds(10_000),
+    userIds: pickRandomUserIds(props.usersPerDropdown),
   }))
 
 type Dropdown = {
@@ -30,5 +34,5 @@ type Dropdown = {
   userIds: number[]
 }
 
-const dropdowns = ref<Dropdown[]>(createRandomDropdowns(10_000))
+const dropdowns = ref<Dropdown[]>(createRandomDropdowns(props.numberOfDropdowns))
 </script>
