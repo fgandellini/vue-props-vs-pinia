@@ -13,7 +13,7 @@ export type User = {
 
 export const createRandomUser = (id: number): User => ({
   id,
-  name: faker.name.fullName(),
+  name: faker.person.fullName(),
   email: faker.internet.email(),
   age: faker.number.int({ min: 18, max: 65 }),
   isActive: faker.datatype.boolean(),

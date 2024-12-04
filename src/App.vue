@@ -14,13 +14,11 @@
   <div class="test-app">
     <AppWithProps
       v-if="app === 'props'"
-      :users="users"
       :number-of-dropdowns="numberOfDropdowns"
       :users-per-dropdown="usersPerDropdown"
     />
     <AppWithPinia
       v-if="app === 'pinia'"
-      :users="users"
       :number-of-dropdowns="numberOfDropdowns"
       :users-per-dropdown="usersPerDropdown"
     />
@@ -31,14 +29,11 @@
 import { ref } from 'vue'
 import AppWithProps from './components/AppWithProps.vue'
 import AppWithPinia from './components/AppWithPinia.vue'
-import { createRandomUser } from './schema'
 
 const app = ref<'props' | 'pinia' | null>(null)
 
 const numberOfDropdowns = ref(1)
 const usersPerDropdown = ref(10)
-
-const users = Array.from({ length: 100_000 }, (_, i) => createRandomUser(i))
 
 const toggleApp = (newApp: 'props' | 'pinia' | null) => {
   app.value = newApp

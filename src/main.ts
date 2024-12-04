@@ -5,7 +5,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 
 const app = createApp(App)
-app.config.performance = true
+app.config.performance = false
 
 app.use(createPinia())
 
